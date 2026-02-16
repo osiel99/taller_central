@@ -1,0 +1,47 @@
+services:
+  db:
+    image: postgres:15
+    container_name: taller_db
+    restart: always
+    environment:
+      POSTGRES_USER: taller_user
+      POSTGRES_PASSWORD: taller_pass
+      POSTGRES_DB: taller_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - taller_net
+
+  backend:
+    build:
+      context: ./taller_backend
+    container_name: taller_backend
+    restart: always
+    env_file:
+      - ./taller_backend/.env
+    volumes:
+      - ./taller_backend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - taller_net
+
+  frontend:
+    build:
+      context: ./taller_frontend
+    container_name: taller_frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - taller_net
+
+networks:
+  taller_net:
+
+volumes:
+  postgres_data:
