@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Header
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app import crud, schemas
@@ -24,6 +24,7 @@ def importar_excel_vehiculos(
     archivo: UploadFile = File(...),
     db: Session = Depends(get_db)
 ):
+
     # Validar extensión
     if not archivo.filename.endswith(".xlsx"):
         raise HTTPException(status_code=400, detail="El archivo debe ser .xlsx")

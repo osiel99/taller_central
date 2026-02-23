@@ -63,7 +63,9 @@ def autenticar_usuario(db: Session, username: str, password: str) -> Optional[mo
 # EXTRACCIÓN DEL TOKEN DESDE EL HEADER
 # ------------------------------------------------------------
 
-def get_token_from_header(authorization: str = Header(...)) -> str:
+def get_token_from_header(
+    authorization: str = Header(..., convert_underscores=False)
+) -> str:
     """
     Extrae el token del header Authorization: Bearer <token>.
     """

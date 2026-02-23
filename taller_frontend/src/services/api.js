@@ -1,11 +1,14 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://taller_backend:8000/",
+  baseURL: import.meta.env.VITE_API_URL,
   headers: {
     "Content-Type": "application/json",
   },
 });
+
+export default api;
+
 
 // Interceptor de errores global
 api.interceptors.response.use(
