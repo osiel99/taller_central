@@ -7,8 +7,6 @@ const api = axios.create({
   },
 });
 
-export default api;
-
 
 // Interceptor de errores global
 api.interceptors.response.use(
